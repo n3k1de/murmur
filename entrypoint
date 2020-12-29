@@ -1,0 +1,6 @@
+#!/bin/sh
+cd /home/murmur
+if [ "$LDAP" = "True" ]
+  then echo "start ldap service"; /home/murmur/ldapmur.py -i /home/murmur/ldapmur.ini -d
+fi
+/home/murmur/murmur.x86 -fg -v -ini /home/murmur/murmur.ini
