@@ -462,7 +462,7 @@ def do_main_program():
 
 		@fortifyIceFu(authenticateFortifyResult)
 		@checkSecret
-		def authenticate(self, name, pw, certlist, certhash, strong, current=None):
+		def authenticate(self, name, pw, certlist, certhash, strong, current=None, groups=None):
 			"""
 			This function is called to authenticate a user
 			"""
@@ -618,7 +618,7 @@ def do_main_program():
 			# Add the user/id combo to cache, then accept:
 			self.name_uid_cache[displayName] = uid
 			debug("Login accepted for " + name)
-			displayName = '[{group}] {displayName}'.format(group=('ADMIN' if is_admin == True else 'USER'), displayName=displayName)
+			# displayName = '[{group}] {displayName}'.format(group=('A' if is_admin == True else 'U'), displayName=displayName)
 			return (uid + cfg.user.id_offset, displayName, [])
 
 		@fortifyIceFu((False, None))
@@ -750,10 +750,14 @@ def do_main_program():
 			"""
 			Gets called when the server is asked to register a user.
 			"""
-
+			
+			debug("registerUser.name: {}".format(dir(name)))
+			debug("registerUser.current: {}".format(dir(current)))
+			
+			FAILURE = -1
 			FALL_THROUGH = -2
 			debug("registerUser '%s' -> fall through", name)
-			return FALL_THROUGH
+			return FAILURE
 
 		@fortifyIceFu(-1)
 		@checkSecret
